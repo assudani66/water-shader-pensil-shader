@@ -15,10 +15,13 @@ import { createPaperTexture } from './utils/PaperTexture.js';
 
 // Init Scene
 const scene = new THREE.Scene();
+window.scene = scene; // Expose to global for console debugging
 scene.background = new THREE.Color(0xf0f0f0);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 5, 10);
+camera.position.set(1.5494483476864447, 0.53339863805558, 1.2965844483652043);
+camera.rotation.set(-0.16307335514357835, 0.5752208169245552, 0.08927212498253363, 'XYZ');
+window.camera = camera;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
