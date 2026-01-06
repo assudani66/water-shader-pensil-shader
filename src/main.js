@@ -7,7 +7,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import * as dat from 'dat.gui';
+import GUI from 'lil-gui';
 
 import { WatercolorShader } from './shaders/Watercolor.js';
 import { PencilLinesShader } from './shaders/PencilLines.js';
@@ -168,7 +168,7 @@ pencilPass.enabled = false; // Off by default as user requested "check box which
 composer.addPass(pencilPass);
 
 // GUI
-const gui = new dat.GUI();
+const gui = new GUI();
 const params = {
     'Watercolor': true,
     'Pencil Lines': false,
@@ -176,12 +176,16 @@ const params = {
 
 const wcFolder = gui.addFolder('Watercolor Settings');
 wcFolder.add(params, 'Watercolor').onChange((val) => { watercolorPass.enabled = val; });
+watercolorPass.uniforms.pigment.value = 0.1;
+watercolorPass.uniforms.threshold.value = 0.3;
 wcFolder.add(watercolorPass.uniforms.pigment, 'value', 0, 5).name('Pigment');
 wcFolder.add(watercolorPass.uniforms.threshold, 'value', 0, 1).name('Threshold');
 wcFolder.open();
 
 const pencilFolder = gui.addFolder('Pencil Lines Settings');
 pencilFolder.add(params, 'Pencil Lines').onChange((val) => { pencilPass.enabled = val; });
+pencilPass.uniforms.uThickness.value = 0.05;
+pencilPass.uniforms.uThreshold.value = 0.05;
 pencilFolder.add(pencilPass.uniforms.uThickness, 'value', 0, 5).name('Thickness');
 pencilFolder.add(pencilPass.uniforms.uThreshold, 'value', 0, 1).name('Sensitivity');
 pencilFolder.open();
